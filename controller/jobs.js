@@ -7,6 +7,7 @@ module.exports = {
     try {
       const axiosResponse = await axios({
         method: "GET",
+        url,
       });
 
       if (!axiosResponse)
@@ -89,6 +90,36 @@ module.exports = {
       const result = {
         meta: { statusCode: 200, message: `SUCCESS`, time: new Date() },
         data: dataFinal,
+      };
+      res.status(200).json(result);
+    } catch (e) {
+      return next(e);
+    }
+  },
+
+  jobdatabyid: async (req, res, next) => {
+    try {
+      const { id } = req.params;
+      const axiosResponse = await axios({
+        method: "GET",
+        url,
+      });
+      if (!axiosResponse)
+        throw {
+          name: "Error Axios",
+          statusCode: 400,
+          data: id,
+        };
+      const dataAxiosFind = axiosResponse.data.find((data) => data.id === id);
+      if (!dataAxiosFind)
+        throw {
+          name: "Error Data not Fount",
+          statusCode: 400,
+          data: id,
+        };
+      const result = {
+        meta: { statusCode: 200, message: `SUCCESS`, time: new Date() },
+        data: dataAxiosFind,
       };
       res.status(200).json(result);
     } catch (e) {

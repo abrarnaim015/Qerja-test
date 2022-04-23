@@ -9,6 +9,7 @@ router
   .post("/login", userController.loginuser)
   .get("/allusers", checktoken, userController.getalluser)
   .get("/alljobs", checktoken, jobsController.alljobs)
-  .get("/jobssearch", checktoken, jobsController.jobssearch);
+  .get("/jobssearch", checktoken, jobsController.jobssearch)
+  .get("/jobbyid/:id", checktoken, jobsController.jobdatabyid);
 
 module.exports = router;
